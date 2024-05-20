@@ -1,22 +1,29 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerMainSC : MonoBehaviour
 {
     [Header("--- Движение / Movement ---")]
     public float speed_Move;
+    private Rigidbody rb;
+
     [Header("--- Камера / Camera ---")]
     public GameObject Camera;
     public Vector3 camera_Ofset;
     public Transform camera_Point;
-    public float sence_H, sence_V;
+    public float sence_H, sence_V,sence_Zoom;
 
-    private Rigidbody rb;
+    public Image image_Point;
+    public Sprite[] array_image_Point;
+
+    
     
     void Start()
     {
         rb = GetComponent<Rigidbody>();
+        image_Point.sprite=array_image_Point[0];
     }
     private void Update()
     {
@@ -25,6 +32,7 @@ public class PlayerMainSC : MonoBehaviour
     void FixedUpdate()
     {
         Controll_Movement();
+        detect_Point();
     }
     private void Controll_Movement()
     {
@@ -39,12 +47,41 @@ public class PlayerMainSC : MonoBehaviour
     }
     private void Controll_Camera()
     {
-        camera_Point.transform.localEulerAngles += new Vector3(-1*Input.GetAxis("Mouse Y")*sence_V, Input.GetAxis("Mouse X")*sence_H, 0);
+        camera_Point.transform.localEulerAngles += new Vector3(-1*Input.GetAxis("Mouse Y")*sence_V, Input.GetAxis("Mouse X")*sence_H, 0); //вращение
 
         camera_Point.position = rb.position;
-        Camera.transform.position = camera_Point.position;
+        Camera.transform.position = camera_Point.position;                      //применение
         Camera.transform.localPosition = camera_Ofset;
 
-        //camera_Point
+        camera_Ofset.z += Input.GetAxis("Mouse ScrollWheel")*sence_Zoom;
+        //camera_Ofset.x += Input.GetAxis("Mouse ScrollWheel")*-0.6f*sence_Zoom;            // зум
+        camera_Ofset.z = Mathf.Clamp(camera_Ofset.z, -6.3f,-2.51f);
+        //camera_Ofset.x = Mathf.Clamp(camera_Ofset.x, 0.66f, 2.94f);
+    }
+
+    private void detect_Point()
+    {
+        Ray ray = Camera.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        RaycastHit hit;
+        float maxDistance = 7f+(-1f*camera_Ofset.z);
+
+        if (Physics.Raycast(ray, out hit, maxDistance))
+        {
+            if (hit.collider.gameObject.tag == "Grabable")
+            {
+                image_Point.sprite = array_image_Point[1];
+            }
+            else
+            {
+                image_Point.sprite = array_image_Point[0];
+            }
+        }
+        else
+        {
+            image_Point.sprite = array_image_Point[0];
+        }
+
+        // Для визуализации луча в редакторе
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
     }
 }
