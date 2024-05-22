@@ -18,8 +18,12 @@ public class PlayerMainSC : MonoBehaviour
     public Image image_Point;
     public Sprite[] array_image_Point;
 
-    
-    
+    [Header("--- Держать / Grab ---")]
+    public bool isGrab = false;
+    public GameObject objGrab;
+
+
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -32,7 +36,8 @@ public class PlayerMainSC : MonoBehaviour
     void FixedUpdate()
     {
         Controll_Movement();
-        detect_Point();
+        if (isGrab) Grab();
+        else detect_Point();
     }
     private void Controll_Movement()
     {
@@ -70,6 +75,11 @@ public class PlayerMainSC : MonoBehaviour
             if (hit.collider.gameObject.tag == "Grabable")
             {
                 image_Point.sprite = array_image_Point[1];
+                if (Input.GetMouseButton(0))
+                {
+                    objGrab=hit.collider.gameObject;
+                    isGrab=true;
+                }
             }
             else
             {
@@ -83,5 +93,15 @@ public class PlayerMainSC : MonoBehaviour
 
         // Для визуализации луча в редакторе
         Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
+    }
+    private void Grab()
+    {
+
+
+        if (!Input.GetMouseButton(0))  //отпустить объект
+        {
+            isGrab = false;
+            objGrab = null;
+        }
     }
 }
