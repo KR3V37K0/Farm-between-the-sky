@@ -22,6 +22,9 @@ public class PlayerMainSC : MonoBehaviour
     public bool isGrab = false;
     public GameObject objGrab;
 
+    [Header("--- Трава / Grass ---")]
+    public Material Grass_mat;
+
 
 
     void Start()
@@ -38,6 +41,8 @@ public class PlayerMainSC : MonoBehaviour
         Controll_Movement();
         if (isGrab) Grab();
         else detect_Point();
+
+        Grass_Touch();
     }
     private void Controll_Movement()
     {
@@ -47,7 +52,7 @@ public class PlayerMainSC : MonoBehaviour
             transform.localEulerAngles = new Vector3(0,camera_Point.localEulerAngles.y,0);
         }
         rb.MovePosition(rb.position+transform.forward*speed_Move*1.2f*Input.GetAxis("Vertical")*Time.deltaTime);     //здесь коэффицент отличия движения вперед и вбок
-        rb.MovePosition(rb.position + Vector3.right * speed_Move * Input.GetAxis("Horizontal") * Time.deltaTime);
+        rb.MovePosition(rb.position + transform.right * speed_Move * Input.GetAxis("Horizontal") * Time.deltaTime);
 
     }
     private void Controll_Camera()
@@ -103,5 +108,9 @@ public class PlayerMainSC : MonoBehaviour
             isGrab = false;
             objGrab = null;
         }
+    }
+    private void Grass_Touch()
+    {
+        Grass_mat.SetVector("_PlayerPosition",transform.position);   
     }
 }
