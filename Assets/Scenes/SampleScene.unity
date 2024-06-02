@@ -171,7 +171,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f78503483b5c09448e8717cb7cea8f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed_Move: 3
+  speed_Move: 5
   Camera: {fileID: 963194225}
   camera_Ofset: {x: 1.38, y: 0.71, z: -3.71}
   camera_Point: {fileID: 166126557}
@@ -184,7 +184,6 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 35ed4e0fb1739ac418df37c27f5952b7, type: 3}
   isGrab: 0
   objGrab: {fileID: 0}
-  Grass_mat: {fileID: 2100000, guid: 1ce422b15c497f64497b65758daa5386, type: 2}
 --- !u!54 &125895701
 Rigidbody:
   m_ObjectHideFlags: 0

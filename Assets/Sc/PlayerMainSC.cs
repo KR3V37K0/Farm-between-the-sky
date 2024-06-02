@@ -22,8 +22,6 @@ public class PlayerMainSC : MonoBehaviour
     public bool isGrab = false;
     public GameObject objGrab;
 
-    [Header("--- Трава / Grass ---")]
-    public Material Grass_mat;
 
 
 
@@ -42,7 +40,6 @@ public class PlayerMainSC : MonoBehaviour
         if (isGrab) Grab();
         else detect_Point();
 
-        Grass_Touch();
     }
     private void Controll_Movement()
     {
@@ -108,9 +105,5 @@ public class PlayerMainSC : MonoBehaviour
             isGrab = false;
             objGrab = null;
         }
-    }
-    private void Grass_Touch()
-    {
-        Grass_mat.SetVector("_PlayerPosition",transform.position);   
     }
 }

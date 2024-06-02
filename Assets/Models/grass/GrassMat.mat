@@ -126,7 +126,7 @@ Material:
     - _FarColor: {r: 0.2712264, g: 0.5, b: 0.33441535, a: 0}
     - _NearColor: {r: 0.4679423, g: 0.6509434, b: 0.19344072, a: 0}
     - _Near_Far_range: {r: 2.6, g: 27.81, b: 0, a: 0}
-    - _PlayerPosition: {r: 50.340923, g: 1.0445681, b: 39.48564, a: 0}
+    - _PlayerPosition: {r: 95.370316, g: 1.8981605, b: 29.88779, a: 0}
     - _ShadowColor: {r: 0.12936097, g: 0.4811321, b: 0.39246225, a: 0}
     - _SpecColor: {r: 0.2, g: 0.2, b: 0.2, a: 1}
     - _WindVector: {r: 0, g: 1, b: 0, a: 0}
