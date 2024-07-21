@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.GraphicsBuffer;
 
 public class PlayerMainSC : MonoBehaviour
 {
@@ -14,6 +16,8 @@ public class PlayerMainSC : MonoBehaviour
     public Vector3 camera_Ofset;
     public Transform camera_Point;
     public float sence_H, sence_V,sence_Zoom;
+    [SerializeField] float Zoom_max, Zoom_min;
+    
 
     public Image image_Point;
     public Sprite[] array_image_Point;
@@ -21,14 +25,29 @@ public class PlayerMainSC : MonoBehaviour
     [Header("--- Держать / Grab ---")]
     public bool isGrab = false;
     public GameObject objGrab;
+    [Header("тест")]
+    public float smoothSpeed = 0.125f;
+    [SerializeField][Range(-90, 90)] float minXAngle, maxXAngle;
 
+    private Vector3 velocity = Vector3.zero;
+    Quaternion targetRotation;
+    float targetZoom, currentZoom;
+    private float zoomVelocity = 0.0f;
 
-
-
+    private void OnValidate()
+    {
+        // Проверка и корректировка значений
+        if (minXAngle > maxXAngle)
+        {
+            minXAngle = maxXAngle;
+        }
+    }
     void Start()
     {
         rb = GetComponent<Rigidbody>();
         image_Point.sprite=array_image_Point[0];
+        //Cursor.lockState = CursorLockMode.Locked;
+        targetRotation = camera_Point.transform.localRotation;
     }
     private void Update()
     {
@@ -46,13 +65,115 @@ public class PlayerMainSC : MonoBehaviour
         //Debug.Log(camera_Point.transform.forward);
         if ((Input.GetAxis("Vertical") != 0) || (Input.GetAxis("Horizontal") != 0))
         {
+            transform.localEulerAngles = new Vector3(0, camera_Point.localEulerAngles.y, 0);
+        }
+        rb.MovePosition(rb.position + transform.forward * speed_Move * 1.2f * Input.GetAxis("Vertical") * Time.deltaTime);     //здесь коэффицент отличия движения вперед и вбок
+        rb.MovePosition(rb.position + transform.right * speed_Move * Input.GetAxis("Horizontal") * Time.deltaTime);
+
+    }
+    private void Controll_Camera()
+    {
+        
+        float rotationSmoothTime = 0.3f;
+        if (Input.GetMouseButton(1))
+        {
+            // Обновление целевого вращения на основе ввода мыши
+            float mouseX = Input.GetAxis("Mouse X") * sence_H;
+            float mouseY = -Input.GetAxis("Mouse Y") * sence_V;
+
+            Quaternion rotationDelta = Quaternion.Euler(mouseY, mouseX, 0);
+            targetRotation *= rotationDelta;
+            
+        }
+
+        // Плавное вращение camera_Point к целевому вращению
+        targetRotation.z = 0;
+        camera_Point.transform.localRotation = Quaternion.Slerp(camera_Point.transform.localRotation, targetRotation, Time.deltaTime / rotationSmoothTime);
+
+        Vector3 eulerAngles = camera_Point.transform.localEulerAngles;
+
+        // Преобразование углов в диапазон (-180, 180)
+        if (eulerAngles.x > 180)
+            eulerAngles.x -= 360;
+
+        // Ограничение углов X в диапазоне от minXAngle до maxXAngle
+        eulerAngles.x = Mathf.Clamp(eulerAngles.x, minXAngle, maxXAngle);
+
+        // Приведение углов к диапазону (0, 360)
+        if (eulerAngles.x < 0)
+            eulerAngles.x += 360;
+
+        eulerAngles.z = 0;
+
+        camera_Point.transform.localEulerAngles = eulerAngles;
+
+
+        // Обновление позиции camera_Point
+        camera_Point.position = rb.position;
+
+        // Применение положения камеры
+        targetZoom += Input.GetAxis("Mouse ScrollWheel") * sence_Zoom;
+        targetZoom = Mathf.Clamp(targetZoom, Zoom_min, Zoom_max);
+
+        // Плавное изменение зума
+        currentZoom = Mathf.SmoothDamp(currentZoom, targetZoom, ref zoomVelocity, rotationSmoothTime);
+        camera_Ofset.z = currentZoom;
+
+        // Применение положения камеры
+        Camera.transform.localPosition = camera_Ofset;
+    }
+    private void detect_Point()
+    {
+        Ray ray = Camera.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        RaycastHit hit;
+        float maxDistance = 7f + (-1f * camera_Ofset.z);
+
+        if (Physics.Raycast(ray, out hit, maxDistance))
+        {
+            if (hit.collider.gameObject.tag == "Grabable")
+            {
+                image_Point.sprite = array_image_Point[1];
+                if (Input.GetMouseButton(0))
+                {
+                    objGrab = hit.collider.gameObject;
+                    isGrab = true;
+                }
+            }
+            else
+            {
+                image_Point.sprite = array_image_Point[0];
+            }
+        }
+        else
+        {
+            image_Point.sprite = array_image_Point[0];
+        }
+
+        // Для визуализации луча в редакторе
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
+    }
+    private void Grab()
+    {
+
+
+        if (!Input.GetMouseButton(0))  //отпустить объект
+        {
+            isGrab = false;
+            objGrab = null;
+        }
+    }
+    private void OLDControll_Movement()
+    {
+        //Debug.Log(camera_Point.transform.forward);
+        if ((Input.GetAxis("Vertical") != 0) || (Input.GetAxis("Horizontal") != 0))
+        {
             transform.localEulerAngles = new Vector3(0,camera_Point.localEulerAngles.y,0);
         }
         rb.MovePosition(rb.position+transform.forward*speed_Move*1.2f*Input.GetAxis("Vertical")*Time.deltaTime);     //здесь коэффицент отличия движения вперед и вбок
         rb.MovePosition(rb.position + transform.right * speed_Move * Input.GetAxis("Horizontal") * Time.deltaTime);
 
     }
-    private void Controll_Camera()
+    private void OLDControll_Camera()
     {
         camera_Point.transform.localEulerAngles += new Vector3(-1*Input.GetAxis("Mouse Y")*sence_V, Input.GetAxis("Mouse X")*sence_H, 0); //вращение
 
@@ -65,8 +186,7 @@ public class PlayerMainSC : MonoBehaviour
         camera_Ofset.z = Mathf.Clamp(camera_Ofset.z, -6.3f,-2.51f);
         //camera_Ofset.x = Mathf.Clamp(camera_Ofset.x, 0.66f, 2.94f);
     }
-
-    private void detect_Point()
+    private void OLDdetect_Point()
     {
         Ray ray = Camera.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
         RaycastHit hit;
@@ -96,7 +216,7 @@ public class PlayerMainSC : MonoBehaviour
         // Для визуализации луча в редакторе
         Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.red);
     }
-    private void Grab()
+    private void OLDGrab()
     {
 
 
