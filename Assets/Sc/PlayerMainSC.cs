@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.GraphicsBuffer;
@@ -44,9 +45,9 @@ public class PlayerMainSC : MonoBehaviour
     }
     void Start()
     {
+        Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
         image_Point.sprite=array_image_Point[0];
-        //Cursor.lockState = CursorLockMode.Locked;
         targetRotation = camera_Point.transform.localRotation;
     }
     private void Update()
@@ -77,6 +78,7 @@ public class PlayerMainSC : MonoBehaviour
         float rotationSmoothTime = 0.3f;
         if (Input.GetMouseButton(1))
         {
+            image_Point.gameObject.SetActive(false);
             // Обновление целевого вращения на основе ввода мыши
             float mouseX = Input.GetAxis("Mouse X") * sence_H;
             float mouseY = -Input.GetAxis("Mouse Y") * sence_V;
@@ -84,6 +86,10 @@ public class PlayerMainSC : MonoBehaviour
             Quaternion rotationDelta = Quaternion.Euler(mouseY, mouseX, 0);
             targetRotation *= rotationDelta;
             
+        }
+        else if(Input.GetMouseButtonUp(1))
+        {
+            image_Point.gameObject.SetActive(true);
         }
 
         // Плавное вращение camera_Point к целевому вращению
@@ -124,12 +130,21 @@ public class PlayerMainSC : MonoBehaviour
     }
     private void detect_Point()
     {
-        Ray ray = Camera.GetComponent<Camera>().ScreenPointToRay(new Vector3(Screen.width / 2, Screen.height / 2, 0));
+        //Vector2 localCursorPosition;
+        // RectTransformUtility.ScreenPointToLocalPointInRectangle(image_Point.rectTransform as RectTransform, Input.mousePosition, Camera.GetComponent<Camera>(), out localCursorPosition);
+        image_Point.rectTransform.anchoredPosition = new Vector3(Input.mousePosition.x- (Screen.width / 2), Input.mousePosition.y - (Screen.height / 2),0);
+        //image_Point.rectTransform.anchoredPosition.x -= (Screen.width / 2);
+        //image_Point.transform.position = Input.mousePosition;
+        Ray ray = Camera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
         float maxDistance = 7f + (-1f * camera_Ofset.z);
 
         if (Physics.Raycast(ray, out hit, maxDistance))
         {
+            Vector3 hitPoint = hit.point;
+            float distanceToObject = Vector3.Distance(hitPoint, Camera.transform.position);
+            float img_size = maxDistance/ distanceToObject /4f;
+            image_Point.transform.localScale = new Vector3(img_size, img_size, 1f);
             if (hit.collider.gameObject.tag == "Grabable")
             {
                 image_Point.sprite = array_image_Point[1];
@@ -139,8 +154,13 @@ public class PlayerMainSC : MonoBehaviour
                     isGrab = true;
                 }
             }
+            else if (hit.collider.gameObject.tag == "Player")
+            {
+                image_Point.gameObject.SetActive(false);
+            }
             else
             {
+                image_Point.gameObject.SetActive(true);
                 image_Point.sprite = array_image_Point[0];
             }
         }
