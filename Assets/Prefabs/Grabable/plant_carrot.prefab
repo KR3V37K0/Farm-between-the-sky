@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1641369297400219891}
   - component: {fileID: 7954593021422929559}
-  - component: {fileID: 6593374616333563007}
   m_Layer: 0
   m_Name: plant_carrot
   m_TagString: Untagged
@@ -61,27 +60,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!65 &6593374616333563007
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 30694541889890040}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 0
-  serializedVersion: 3
-  m_Size: {x: 0.4551146, y: 1.1477717, z: 0.5171356}
-  m_Center: {x: -0.012442708, y: 0.5889358, z: 0.033863068}
 --- !u!1 &1487589524486625920
 GameObject:
   m_ObjectHideFlags: 0
