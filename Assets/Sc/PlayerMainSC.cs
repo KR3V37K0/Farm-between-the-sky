@@ -30,7 +30,7 @@ public class PlayerMainSC : MonoBehaviour
     public float smoothSpeed = 0.125f;
     [SerializeField][Range(-90, 90)] float minXAngle, maxXAngle;
 
-    private Vector3 velocity = Vector3.zero;
+    private Vector3 velocity = Vector3.zero;  //wtf?
     Quaternion targetRotation;
     float targetZoom, currentZoom;
     private float zoomVelocity = 0.0f;
@@ -174,8 +174,7 @@ public class PlayerMainSC : MonoBehaviour
     }
     private void Grab()
     {
-
-
+       
         if (!Input.GetMouseButton(0))  //отпустить объект
         {
             isGrab = false;
