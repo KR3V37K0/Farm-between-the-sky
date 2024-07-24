@@ -477,9 +477,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BeginningOfNight: 0.8
   TimeOfDay: 0
-  LengthOfDay: 60
+  LengthOfDay: 30
   Days: 0
-  LightSun: {fileID: 1141753882}
 --- !u!4 &463640113
 Transform:
   m_ObjectHideFlags: 0
