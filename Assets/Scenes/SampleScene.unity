@@ -457,7 +457,7 @@ GameObject:
   - component: {fileID: 463640113}
   - component: {fileID: 463640112}
   m_Layer: 0
-  m_Name: Evening change of day
+  m_Name: Day_Changer
   m_TagString: Untagged
   m_Icon: {fileID: 419385456094870383, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -1042,7 +1042,7 @@ GameObject:
   - component: {fileID: 1141753882}
   - component: {fileID: 1141753883}
   m_Layer: 0
-  m_Name: Sun Light
+  m_Name: Light_Sun
   m_TagString: Untagged
   m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
