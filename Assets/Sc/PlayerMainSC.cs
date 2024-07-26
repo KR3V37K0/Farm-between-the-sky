@@ -74,6 +74,62 @@ public class PlayerMainSC : MonoBehaviour
     }
     private void Controll_Camera()
     {
+
+        float rotationSmoothTime = 0.3f;
+        if (Input.GetMouseButton(1))
+        {
+            image_Point.gameObject.SetActive(false);
+            // Обновление целевого вращения на основе ввода мыши
+            float mouseX = Input.GetAxis("Mouse X") * sence_H;
+            float mouseY = -Input.GetAxis("Mouse Y") * sence_V;
+
+            Quaternion rotationDelta = Quaternion.Euler(mouseY, mouseX, 0);
+            targetRotation *= rotationDelta;
+
+        }
+        else if (Input.GetMouseButtonUp(1))
+        {
+            image_Point.gameObject.SetActive(true);
+        }
+
+        // Плавное вращение camera_Point к целевому вращению
+        targetRotation.z = 0;
+        camera_Point.transform.localRotation = Quaternion.Slerp(camera_Point.transform.localRotation, targetRotation, Time.deltaTime / rotationSmoothTime);
+
+        Vector3 eulerAngles = camera_Point.transform.localEulerAngles;
+
+        // Преобразование углов в диапазон (-180, 180)
+        if (eulerAngles.x > 180)
+            eulerAngles.x -= 360;
+
+        // Ограничение углов X в диапазоне от minXAngle до maxXAngle
+        eulerAngles.x = Mathf.Clamp(eulerAngles.x, minXAngle, maxXAngle);
+
+        // Приведение углов к диапазону (0, 360)
+        if (eulerAngles.x < 0)
+            eulerAngles.x += 360;
+
+        eulerAngles.z = 0;
+
+        camera_Point.transform.localEulerAngles = eulerAngles;
+
+
+        // Обновление позиции camera_Point
+        camera_Point.position = rb.position;
+
+        // Применение положения камеры
+        targetZoom += Input.GetAxis("Mouse ScrollWheel") * sence_Zoom;
+        targetZoom = Mathf.Clamp(targetZoom, Zoom_min, Zoom_max);
+
+        // Плавное изменение зума
+        currentZoom = Mathf.SmoothDamp(currentZoom, targetZoom, ref zoomVelocity, rotationSmoothTime);
+        camera_Ofset.z = currentZoom;
+
+        // Применение положения камеры
+        Camera.transform.localPosition = camera_Ofset;
+    }
+    private void NEUROControll_Camera()
+    {
         
         float rotationSmoothTime = 0.3f;
         if (Input.GetMouseButton(1))
