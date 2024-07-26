@@ -179,18 +179,15 @@ MonoBehaviour:
   sence_Zoom: 2
   Zoom_max: -2
   Zoom_min: -10
+  maxRotationSpeed: 0.3
+  rotationSpeed: 0
+  smoothRotation: 0.0035
   image_Point: {fileID: 1637717257}
   array_image_Point:
   - {fileID: 21300000, guid: 990e015176467cf489a2f784593d5579, type: 3}
   - {fileID: 21300000, guid: 35ed4e0fb1739ac418df37c27f5952b7, type: 3}
   isGrab: 0
   objGrab: {fileID: 0}
-  smoothSpeed: 0.6
-  minXAngle: -21
-  maxXAngle: 58
-  maxRotationSpeed: 0.3
-  rotationSpeed: 0
-  smoothRotation: 0.0035
 --- !u!54 &125895701
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -480,7 +477,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   BeginningOfNight: 0.6
   TimeOfDay: 0.5
-  LengthOfDay: 1440
+  LengthOfDay: 30
   Days: 0
   Sun: {fileID: 705507994}
   Moon: {fileID: 700442291}
@@ -1342,13 +1339,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85e183830bacfc84291e7806c0fc8ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wind: 0
-  heat: 0
-  rain: 0
-  Stage_1: 0.5
-  Stage_2: 0.7
-  Stage_3: 0.9
-  CenerateWeather: 0
+  Wind: 0
+  Heat: 0
+  Rain: 0
+  stage_1: 0.5
+  stage_2: 0.7
+  stage_3: 0.9
+  GenerateWeather: 0
 --- !u!4 &740958756
 Transform:
   m_ObjectHideFlags: 0
@@ -6759,5 +6756,4 @@ SceneRoots:
   - {fileID: 1774413316999594596}
   - {fileID: 331650490}
   - {fileID: 1170971724}
-  - {fileID: 463640113}
   - {fileID: 740958756}
