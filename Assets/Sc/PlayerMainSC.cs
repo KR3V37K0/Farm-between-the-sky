@@ -18,7 +18,11 @@ public class PlayerMainSC : MonoBehaviour
     public Transform camera_Point;
     public float sence_H, sence_V,sence_Zoom;
     [SerializeField] float Zoom_max, Zoom_min;
-    
+    float mouseX, mouseY;
+    float targetZoom, currentZoom;
+    float zoomVelocity = 0.0f, rotationSmoothTime = 0.3f;
+    [SerializeField] float maxRotationSpeed, rotationSpeed, smoothRotation;
+
 
     public Image image_Point;
     public Sprite[] array_image_Point;
@@ -26,29 +30,14 @@ public class PlayerMainSC : MonoBehaviour
     [Header("--- Держать / Grab ---")]
     public bool isGrab = false;
     public GameObject objGrab;
-    [Header("тест")]
-    public float smoothSpeed = 0.125f;
-    [SerializeField][Range(-90, 90)] float minXAngle, maxXAngle;
 
-    private Vector3 velocity = Vector3.zero;  //wtf?
-    Quaternion targetRotation;
-    float targetZoom, currentZoom;
-    private float zoomVelocity = 0.0f;
 
-    private void OnValidate()
-    {
-        // Проверка и корректировка значений
-        if (minXAngle > maxXAngle)
-        {
-            minXAngle = maxXAngle;
-        }
-    }
+
     void Start()
     {
         Cursor.visible = false;
         rb = GetComponent<Rigidbody>();
         image_Point.sprite=array_image_Point[0];
-        targetRotation = camera_Point.transform.localRotation;
     }
     private void Update()
     {
@@ -75,100 +64,21 @@ public class PlayerMainSC : MonoBehaviour
     private void Controll_Camera()
     {
 
-        float rotationSmoothTime = 0.3f;
         if (Input.GetMouseButton(1))
         {
             image_Point.gameObject.SetActive(false);
-            // Обновление целевого вращения на основе ввода мыши
-            float mouseX = Input.GetAxis("Mouse X") * sence_H;
-            float mouseY = -Input.GetAxis("Mouse Y") * sence_V;
-
-            Quaternion rotationDelta = Quaternion.Euler(mouseY, mouseX, 0);
-            targetRotation *= rotationDelta;
-
+            mouseX = Input.GetAxis("Mouse X") * sence_H;
+            mouseY = -Input.GetAxis("Mouse Y") * sence_V;
+            rotationSpeed = maxRotationSpeed;
         }
         else if (Input.GetMouseButtonUp(1))
         {
             image_Point.gameObject.SetActive(true);
         }
 
-        // Плавное вращение camera_Point к целевому вращению
-        targetRotation.z = 0;
-        camera_Point.transform.localRotation = Quaternion.Slerp(camera_Point.transform.localRotation, targetRotation, Time.deltaTime / rotationSmoothTime);
-
-        Vector3 eulerAngles = camera_Point.transform.localEulerAngles;
-
-        // Преобразование углов в диапазон (-180, 180)
-        if (eulerAngles.x > 180)
-            eulerAngles.x -= 360;
-
-        // Ограничение углов X в диапазоне от minXAngle до maxXAngle
-        eulerAngles.x = Mathf.Clamp(eulerAngles.x, minXAngle, maxXAngle);
-
-        // Приведение углов к диапазону (0, 360)
-        if (eulerAngles.x < 0)
-            eulerAngles.x += 360;
-
-        eulerAngles.z = 0;
-
-        camera_Point.transform.localEulerAngles = eulerAngles;
-
-
-        // Обновление позиции camera_Point
-        camera_Point.position = rb.position;
-
-        // Применение положения камеры
-        targetZoom += Input.GetAxis("Mouse ScrollWheel") * sence_Zoom;
-        targetZoom = Mathf.Clamp(targetZoom, Zoom_min, Zoom_max);
-
-        // Плавное изменение зума
-        currentZoom = Mathf.SmoothDamp(currentZoom, targetZoom, ref zoomVelocity, rotationSmoothTime);
-        camera_Ofset.z = currentZoom;
-
-        // Применение положения камеры
-        Camera.transform.localPosition = camera_Ofset;
-    }
-    private void NEUROControll_Camera()
-    {
-        
-        float rotationSmoothTime = 0.3f;
-        if (Input.GetMouseButton(1))
-        {
-            image_Point.gameObject.SetActive(false);
-            // Обновление целевого вращения на основе ввода мыши
-            float mouseX = Input.GetAxis("Mouse X") * sence_H;
-            float mouseY = -Input.GetAxis("Mouse Y") * sence_V;
-
-            Quaternion rotationDelta = Quaternion.Euler(mouseY, mouseX, 0);
-            targetRotation *= rotationDelta;
-            
-        }
-        else if(Input.GetMouseButtonUp(1))
-        {
-            image_Point.gameObject.SetActive(true);
-        }
-
-        // Плавное вращение camera_Point к целевому вращению
-        targetRotation.z = 0;
-        camera_Point.transform.localRotation = Quaternion.Slerp(camera_Point.transform.localRotation, targetRotation, Time.deltaTime / rotationSmoothTime);
-
-        Vector3 eulerAngles = camera_Point.transform.localEulerAngles;
-
-        // Преобразование углов в диапазон (-180, 180)
-        if (eulerAngles.x > 180)
-            eulerAngles.x -= 360;
-
-        // Ограничение углов X в диапазоне от minXAngle до maxXAngle
-        eulerAngles.x = Mathf.Clamp(eulerAngles.x, minXAngle, maxXAngle);
-
-        // Приведение углов к диапазону (0, 360)
-        if (eulerAngles.x < 0)
-            eulerAngles.x += 360;
-
-        eulerAngles.z = 0;
-
-        camera_Point.transform.localEulerAngles = eulerAngles;
-
+        camera_Point.transform.localEulerAngles += new Vector3(mouseY*rotationSpeed, mouseX*rotationSpeed, 0);
+        rotationSpeed -= smoothRotation;
+        if(rotationSpeed < 0)rotationSpeed = 0;
 
         // Обновление позиции camera_Point
         camera_Point.position = rb.position;

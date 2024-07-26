@@ -37,7 +37,7 @@ RenderSettings:
   m_ReflectionBounces: 1
   m_ReflectionIntensity: 0.15
   m_CustomReflection: {fileID: 0}
-  m_Sun: {fileID: 705507994}
+  m_Sun: {fileID: 700442291}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -174,8 +174,8 @@ MonoBehaviour:
   Camera: {fileID: 963194225}
   camera_Ofset: {x: 0, y: 1.2, z: 0}
   camera_Point: {fileID: 166126557}
-  sence_H: 5
-  sence_V: 2
+  sence_H: 4
+  sence_V: 4
   sence_Zoom: 2
   Zoom_max: -2
   Zoom_min: -10
@@ -188,6 +188,9 @@ MonoBehaviour:
   smoothSpeed: 0.6
   minXAngle: -21
   maxXAngle: 58
+  maxRotationSpeed: 0.3
+  rotationSpeed: 0
+  smoothRotation: 0.0035
 --- !u!54 &125895701
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -476,8 +479,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   BeginningOfNight: 0.6
-  TimeOfDay: 0.42
-  LengthOfDay: 30
+  TimeOfDay: 0.5
+  LengthOfDay: 1440
   Days: 0
   Sun: {fileID: 705507994}
   Moon: {fileID: 700442291}
@@ -854,7 +857,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 463640111}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.6963643, y: -0.122787856, z: 0.122787856, w: 0.6963643}
+  m_LocalRotation: {x: 0, y: -0.17364825, z: 0, w: 0.9848078}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -863,7 +866,7 @@ Transform:
   - {fileID: 700442289}
   - {fileID: 2094727493}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 90, y: -20, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -20, z: 0}
 --- !u!1 &547766717
 GameObject:
   m_ObjectHideFlags: 0
@@ -3363,11 +3366,11 @@ ParticleSystem:
     flipU: 0
     flipV: 0
   VelocityModule:
-    enabled: 0
+    enabled: 1
     x:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 5.05
+      scalar: 0
       minScalar: 0
       maxCurve:
         serializedVersion: 2
@@ -3420,7 +3423,7 @@ ParticleSystem:
     y:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 2
       minScalar: 0
       maxCurve:
         serializedVersion: 2

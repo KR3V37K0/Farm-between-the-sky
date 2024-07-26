@@ -43,10 +43,8 @@ public class DayChangerSc : MonoBehaviour
 
         
         if (TimeOfDay < BeginningOfNight)
-        {
-            // Дневная фаза
+        {// Дневная фаза
             Stars.Stop();
-            Stars.Clear();
             RenderSettings.sun=Sun;
             float lengthOfDayPhase = BeginningOfNight * LengthOfDay;
             currentPhaseTime = TimeOfDay / BeginningOfNight;
@@ -73,16 +71,7 @@ public class DayChangerSc : MonoBehaviour
         Sun.color = DirectionalColor.Evaluate(TimeOfDay);
         RenderSettings.sun.intensity = SunIntensity.Evaluate(TimeOfDay);
 
-        //RenderSettings.reflectionIntensity=ReflectionIntensity.Evaluate(TimeOfDay);
-
         //GRASS 
-        /*
-        GrassMaterial.SetColor("_FarColor", Color.Lerp(GrassSettings[otherphase].FarColor, GrassSettings[phase].FarColor, timeChange));
-        GrassMaterial.SetColor("_NearColor", Color.Lerp(GrassSettings[otherphase].NearColor, GrassSettings[phase].NearColor, timeChange));
-        GrassMaterial.SetColor("_BottomColor", Color.Lerp(GrassSettings[otherphase].BottomColor, GrassSettings[phase].BottomColor, timeChange));
-        GrassMaterial.SetColor("_ShadowColor", Color.Lerp(GrassSettings[otherphase].ShadowColor, GrassSettings[phase].ShadowColor, timeChange));
-        timeChange += Time.deltaTime / 10f;
-        if (timeChange > 1f) timeChange = 0f;*/
         GrassMaterial.SetColor("_FarColor", GrassSettings.FarColor.Evaluate(TimeOfDay));
         GrassMaterial.SetColor("_NearColor", GrassSettings.NearColor.Evaluate(TimeOfDay));
         GrassMaterial.SetColor("_BottomColor", GrassSettings.BottomColor.Evaluate(TimeOfDay));
