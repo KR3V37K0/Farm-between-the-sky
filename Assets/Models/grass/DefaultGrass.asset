@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c41b039b7bf82584eb9276e6e35f4c51, type: 3}
+  m_Name: DefaultGrass
+  m_EditorClassIdentifier: 
+  FarColor:
+    serializedVersion: 2
+    key0: {r: 0.18924722, g: 0.42246166, b: 0.41651624, a: 1}
+    key1: {r: 0.2328847, g: 0.46435365, b: 0.37113327, a: 1}
+    key2: {r: 0.23529413, g: 0.4666667, b: 0.36862746, a: 1}
+    key3: {r: 0.13725491, g: 0.37254903, b: 0.47058824, a: 0}
+    key4: {r: 0.14184126, g: 0.37695193, b: 0.46581843, a: 0}
+    key5: {r: 0.18924722, g: 0.42246166, b: 0.41651624, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 14842
+    ctime2: 33153
+    ctime3: 45875
+    ctime4: 59945
+    ctime5: 65535
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 39321
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 6
+    m_NumAlphaKeys: 3
+  NearColor:
+    serializedVersion: 2
+    key0: {r: 0.3057008, g: 0.56757444, b: 0.3861293, a: 1}
+    key1: {r: 0.39379615, g: 0.61252105, b: 0.2818532, a: 1}
+    key2: {r: 0.40000004, g: 0.6156863, b: 0.27450982, a: 1}
+    key3: {r: 0.22029775, g: 0.5240015, b: 0.48721862, a: 0}
+    key4: {r: 0.20784314, g: 0.5176471, b: 0.5019608, a: 0}
+    key5: {r: 0.3057008, g: 0.56757444, b: 0.3861293, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 12529
+    ctime2: 29298
+    ctime3: 46067
+    ctime4: 58789
+    ctime5: 65535
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 39707
+    atime2: 65535
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 6
+    m_NumAlphaKeys: 3
+  BottomColor:
+    serializedVersion: 2
+    key0: {r: 0.12914555, g: 0.32682365, b: 0.3322291, a: 1}
+    key1: {r: 0.15572321, g: 0.40451223, b: 0.3220069, a: 1}
+    key2: {r: 0.15686275, g: 0.40784317, b: 0.32156864, a: 0}
+    key3: {r: 0.105882354, g: 0.25882354, b: 0.34117648, a: 0}
+    key4: {r: 0.10739178, g: 0.26323572, b: 0.34059593, a: 0}
+    key5: {r: 0.12802063, g: 0.32353544, b: 0.33266175, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 12529
+    ctime2: 32189
+    ctime3: 46260
+    ctime4: 57825
+    ctime5: 65535
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 39899
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 6
+    m_NumAlphaKeys: 2
+  ShadowColor:
+    serializedVersion: 2
+    key0: {r: 0.16781741, g: 0.31448185, b: 0.37605217, a: 1}
+    key1: {r: 0.14509805, g: 0.4156863, b: 0.38431376, a: 1}
+    key2: {r: 0.14713943, g: 0.40659288, b: 0.38357145, a: 0}
+    key3: {r: 0.1882353, g: 0.22352941, b: 0.36862746, a: 0}
+    key4: {r: 0.18623331, g: 0.23244736, b: 0.36935547, a: 0}
+    key5: {r: 0.1664162, g: 0.3207236, b: 0.3765617, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 11951
+    ctime2: 26600
+    ctime3: 43754
+    ctime4: 54548
+    ctime5: 65535
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 39707
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 6
+    m_NumAlphaKeys: 2
