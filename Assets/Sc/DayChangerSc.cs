@@ -6,9 +6,9 @@ using UnityEngine;
 public class DayChangerSc : MonoBehaviour
 {
     [Header("Time")]
-    [Range(0, 1)][SerializeField] float BeginningOfNight; // Значение между 0 и 1, указывающее начало ночи
+    [Range(0, 1)][SerializeField] float BeginningOfNight; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ 0 пїЅ 1, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     public float TimeOfDay;
-    [SerializeField] float LengthOfDay; // Продолжительность полного дня (включая день и ночь)
+    [SerializeField] float LengthOfDay; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ (пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅ)
     public int Days;
     float currentPhaseTime;
 
@@ -27,7 +27,7 @@ public class DayChangerSc : MonoBehaviour
     [SerializeField] AnimationCurve Exposure, Atmosphere;
     [SerializeField] Gradient Tint, Ground;
 
-    [Header("GRASS (в отдельный скрипт?)")]
+    [Header("GRASS (пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ?)")]
     [SerializeField] Material GrassMaterial;
     [SerializeField] GrassMatSCO GrassSettings;
     float timeChange = 0f;
@@ -43,7 +43,7 @@ public class DayChangerSc : MonoBehaviour
 
         
         if (TimeOfDay < BeginningOfNight)
-        {// Дневная фаза
+        {// пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
             Stars.Stop();
             RenderSettings.sun=Sun;
             float lengthOfDayPhase = BeginningOfNight * LengthOfDay;
@@ -52,7 +52,7 @@ public class DayChangerSc : MonoBehaviour
             Visualize(0);
         }
         else
-        {// Ночная фаза
+        {// пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
             Stars.Play();
             RenderSettings.sun=Moon;
             float lengthOfNightPhase = (1 - BeginningOfNight) * LengthOfDay;
