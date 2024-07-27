@@ -6,13 +6,14 @@ using UnityEngine;
 public class DayChangerSc : MonoBehaviour
 {
     [Header("Time")]
-    [Range(0, 1)][SerializeField] float BeginningOfNight; // �������� ����� 0 � 1, ����������� ������ ����
+    [Range(0, 1)][SerializeField] float BeginningOfNight; 
     public float TimeOfDay;
-    [SerializeField] float LengthOfDay; // ����������������� ������� ��� (������� ���� � ����)
+    [SerializeField] float LengthOfDay; 
     public int Days;
     float currentPhaseTime;
 
     [Header("Visual")]
+    [SerializeField] EnviromentVisulizerSc VisualSC;
     [SerializeField] Light Sun;
     [SerializeField] Light Moon;
     [SerializeField] ParticleSystem Stars;
@@ -27,10 +28,9 @@ public class DayChangerSc : MonoBehaviour
     [SerializeField] AnimationCurve Exposure, Atmosphere;
     [SerializeField] Gradient Tint, Ground;
 
-    [Header("GRASS (� ��������� ������?)")]
+    [Header("GRASS (?)")]
     [SerializeField] Material GrassMaterial;
     [SerializeField] GrassMatSCO GrassSettings;
-    float timeChange = 0f;
 
     void FixedUpdate()
     {
@@ -43,24 +43,26 @@ public class DayChangerSc : MonoBehaviour
 
         
         if (TimeOfDay < BeginningOfNight)
-        {// ������� ����
+        {// DAY
             Stars.Stop();
             RenderSettings.sun=Sun;
             float lengthOfDayPhase = BeginningOfNight * LengthOfDay;
             currentPhaseTime = TimeOfDay / BeginningOfNight;
             transform.localRotation = Quaternion.Euler(currentPhaseTime * 180, 0, 0);
-            Visualize(0);
+            //Visualize(0);
         }
         else
-        {// ������ ����
+        {// NIGHT
             Stars.Play();
             RenderSettings.sun=Moon;
             float lengthOfNightPhase = (1 - BeginningOfNight) * LengthOfDay;
             currentPhaseTime = (TimeOfDay - BeginningOfNight) / (1 - BeginningOfNight);
             transform.localRotation = Quaternion.Euler(180 + currentPhaseTime * 180, 0, 0);
-            Visualize(1);
+            //Visualize(1);
+            
         }
-        
+        VisualSC.Visualize(BeginningOfNight, TimeOfDay);
+
 
     }
     void Visualize(int phase)
