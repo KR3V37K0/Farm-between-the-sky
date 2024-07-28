@@ -30,6 +30,7 @@ public class PlayerMainSC : MonoBehaviour
     [Header("--- Держать / Grab ---")]
     public bool isGrab = false;
     public GameObject objGrab;
+    Rigidbody rbGrab;
 
 
 
@@ -114,9 +115,10 @@ public class PlayerMainSC : MonoBehaviour
             if (hit.collider.gameObject.tag == "Grabable")
             {
                 image_Point.sprite = array_image_Point[1];
-                if (Input.GetMouseButton(0))
+                if (Input.GetMouseButtonDown(0))
                 {
                     objGrab = hit.collider.gameObject;
+                    rbGrab = objGrab.GetComponent<Rigidbody>();
                     isGrab = true;
                 }
             }
@@ -140,12 +142,21 @@ public class PlayerMainSC : MonoBehaviour
     }
     private void Grab()
     {
-       
-        if (!Input.GetMouseButton(0))  //отпустить объект
+        image_Point.rectTransform.anchoredPosition = new Vector3(Input.mousePosition.x - (Screen.width / 2), Input.mousePosition.y - (Screen.height / 2), 0);
+        Ray ray = Camera.GetComponent<Camera>().ScreenPointToRay(Input.mousePosition);
+        RaycastHit hit;
+        float maxDistance = 7f + (-1f * camera_Ofset.z);
+        if (Physics.Raycast(ray, out hit, maxDistance)) 
+        {
+            Vector3 position = hit.point + new Vector3(0,2,0);
+            rbGrab.MovePosition(position);
+        }
+        if (Input.GetMouseButtonDown(0))  //отпустить объект
         {
             isGrab = false;
             objGrab = null;
         }
+        Debug.DrawRay(ray.origin, ray.direction * maxDistance, Color.green);
     }
     private void OLDControll_Movement()
     {
