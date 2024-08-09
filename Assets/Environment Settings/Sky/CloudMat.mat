@@ -12,8 +12,7 @@ Material:
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
   m_ValidKeywords: []
-  m_InvalidKeywords:
-  - _ALPHATEST_ON
+  m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -38,18 +37,19 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Alpha: 1.68
-    - _AlphaClip: 0.54
+    - _Alpha: 1.47
+    - _AlphaClip: 0.04
     - _ChangeSpeed: 37.9
-    - _Power: 0.005
+    - _Power: 0.01
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Scale: 101.45
-    - _VertexHeghtOffset: 0.05
+    - _Scale: 100
+    - _VertexHeghtOffset: 0.04
     m_Colors:
     - _ChangeVector: {r: 0.001, g: 0.002, b: 0, a: 0}
-    - _Color: {r: 0.45834818, g: 0.86893296, b: 0.9433962, a: 1}
+    - _Color: {r: 0.032632, g: 0.01619794, b: 0.26415092, a: 1}
     - _SpeedCloud: {r: 0.004, g: 0.006, b: 0, a: 0}
+    - _useless_ChangeVector: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []
 --- !u!114 &1405143209571776284
 MonoBehaviour:

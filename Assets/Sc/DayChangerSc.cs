@@ -61,7 +61,7 @@ public class DayChangerSc : MonoBehaviour
             //Visualize(1);
             
         }
-        VisualSC.Visualize(BeginningOfNight, TimeOfDay);
+        VisualSC.VisualizeCycle(BeginningOfNight, TimeOfDay);
 
 
     }

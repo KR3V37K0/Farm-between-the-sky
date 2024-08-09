@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class WeatherSc : MonoBehaviour
 {
+    [SerializeField] EnviromentVisulizerSc Visualizer;
     [SerializeField] int Wind,Heat,Rain;
 
 
@@ -19,6 +20,8 @@ public class WeatherSc : MonoBehaviour
         Heat = GenerateStageWeather();
         Rain = GenerateStageWeather();
         GenerateWeather = false;
+
+        Visualizer.VisualizeWeather(Wind, Heat, Rain);
     }
     private int GenerateStageWeather() 
     {
